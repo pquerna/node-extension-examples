@@ -22,7 +22,8 @@ HelloWorldJs = function() {
 
 HelloWorldJs.prototype.hello = function()
 {
-  return "Hello World"
+  this.m_count++;
+  return "Hello World";
 };
 
 exports.HelloWorldJs = HelloWorldJs;
