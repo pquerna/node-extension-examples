@@ -17,8 +17,6 @@
 
 #include <v8.h>
 #include <node.h>
-#include <node_events.h>
-#include <node_buffer.h>
 
 #include <unistd.h>
 
@@ -115,8 +113,9 @@ public:
   static int EIO_AfterHello(eio_req *req)
   {
     HandleScope scope;
-    ev_unref(EV_DEFAULT_UC);
     hello_baton_t *baton = static_cast<hello_baton_t *>(req->data);
+    ev_unref(EV_DEFAULT_UC);
+    baton->hw->Unref();
 
     Local<Value> argv[1];
 
@@ -124,7 +123,6 @@ public:
 
     TryCatch try_catch;
 
-    baton->hw->Unref();
     baton->cb->Call(Context::GetCurrent()->Global(), 1, argv);
 
     if (try_catch.HasCaught()) {
