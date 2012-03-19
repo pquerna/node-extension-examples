@@ -87,15 +87,13 @@ public:
   }
 
 
-  static int EIO_Hello(eio_req *req)
+  static void EIO_Hello(eio_req *req)
   {
     hello_baton_t *baton = static_cast<hello_baton_t *>(req->data);
 
     sleep(baton->sleep_for);
 
     baton->hw->m_count += baton->increment_by;
-
-    return 0;
   }
 
   static int EIO_AfterHello(eio_req *req)
